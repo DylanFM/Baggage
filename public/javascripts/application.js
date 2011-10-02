@@ -16,12 +16,8 @@ $(function () {
   conn = new WebSocket('ws://10.109.3.75:8080');
 
   function updatePosition () {
-    console.log("update position");
     // Find location
     navigator.geolocation.getCurrentPosition(function(result) {
-
-      $('p').text('' + result.coords.latitude + ', ' + result.coords.longitude);
-
       data = {
         type: 'check',
         coords: {
@@ -43,7 +39,14 @@ $(function () {
   };
 
   conn.onmessage = function (msg) {
-    $('p').text(msg.data);
+    data = JSON.parse(msg.data);
+    switch(data.type) {
+      case 'items':
+        break;
+      
+      default:
+        $('p').text(data.msg);
+    }
     _.delay(updatePosition, 5000);
   };
  
