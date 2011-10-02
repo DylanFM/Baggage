@@ -1,0 +1,97 @@
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+html {
+  text-rendering: optimizeLegibility;-webkit-font-smoothing: antialiased;
+  image-rendering: optimizeQuality;image-rendering: -moz-crisp-edges;image-rendering: -webkit-optimize-contrast;-ms-interpolation-mode: nearest-neighbor;
+  background:#fff;color:#000;
+}
+
+  body {
+    padding:9.192px 14.873px 24.065px 14.873px;
+    max-width:863.25px;margin:0 auto;
+    zoom:1;
+  }
+  body:before, body:after {content:"";display:table}
+  body:after {clear:both}
+
+    a {-webkit-transition:color 1s ease,border-color 1s ease,background-color 1s ease;}
+    a:link, a:visited {color:#000;text-decoration:none;}
+    a:active, a:hover, a:focus {text-decoration:underline}
+
+    b, strong {font-weight:700}
+
+/* Screens smaller than 480px, e.g. mobile devices */
+/*  Changes: smaller font sizes and related whitespace */
+@media screen and (max-width: 480px) {
+  body {font-size:14.873px;line-height:18px;}
+}
+
+/* Screens larger than 480px */
+@media screen and (min-width: 480px) {
+}
+
+/* Screens larger than 600px */
+@media screen and (min-width: 600px) {
+}
+
+/* Screens larger than 768px */
+@media screen and (min-width: 768px) {
+}
+
+/* Screens larger than 1024px */
+@media screen and (min-width: 1024px) {
+}
+
+/* Screens larger than 1200px */
+@media screen and (min-width: 1200px) {
+}
