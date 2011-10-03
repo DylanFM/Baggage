@@ -31,6 +31,16 @@ $(function () {
 
   conn.onopen = function (e) {
     console.log('Connection open');
+
+    // Setup placing
+    $('form').submit(function (e) {
+      e.preventDefault();
+      navigator.geolocation.getCurrentPosition(function(result) {
+        place(conn, $('#name').val(), result.coords.latitude, result.coords.longitude);
+      });
+    });
+    
+    // Begin updating position
     updatePosition();
   };
 
@@ -40,14 +50,21 @@ $(function () {
 
   conn.onmessage = function (msg) {
     data = JSON.parse(msg.data);
+
     switch(data.type) {
-      case 'items':
+      case 'found':
+        $('#found').append('<li>' + data.msg + '</li>');
+        _.delay(updatePosition, 15000);
+        break;
+
+      case 'stored':
+        $('p').text(data.msg);
         break;
       
       default:
         $('p').text(data.msg);
+        _.delay(updatePosition, 5000);
     }
-    _.delay(updatePosition, 5000);
   };
  
 });

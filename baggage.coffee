@@ -12,35 +12,37 @@ server = ws.createServer()
 
 server.addListener 'connection', (conn) ->
 
-  notify = (msg) ->
+  notify = (msg, type) ->
     data = 
-      type: 'notice'
+      type: type or 'notice'
       msg: msg
+    console.log msg
     conn.send JSON.stringify(data)
-
-  # Send the client information about items available
 
   conn.addListener 'message', (msg) ->
 
     msg = JSON.parse msg
     switch msg.type
       when 'place'
-        client.set "obj#{msg.coords.lat},#{msg.coords.lng}", msg.name
+        lat = parseFloat(msg.coords.lat, 10).toFixed(5)
+        lng = parseFloat(msg.coords.lng, 10).toFixed(5)
 
-        notice = "Stored #{msg.name} at #{msg.coords.lat},#{msg.coords.lng}"
-        console.log notice
-        notify notice
+        client.set "obj#{lat},#{lng}", msg.name
+
+        msg = "Stored #{msg.name} at #{lat},#{lng}"
+        notify msg, 'stored'
       when 'check'
-        key = "obj#{msg.coords.lat},#{msg.coords.lng}"
+        lat = parseFloat(msg.coords.lat, 10).toFixed(5)
+        lng = parseFloat(msg.coords.lng, 10).toFixed(5)
+
+        key = "obj#{lat},#{lng}"
 
         client.get key, (err, reply) ->
           if err or !reply
-            console.log 'Nothing found', err, reply
             notify 'Checked in, nothing there'
           else
             item = reply.toString()
-            console.log 'Found', item
-            notify "Hey, you found: #{item}"
+            notify item, 'found'
             client.del key
 
 
