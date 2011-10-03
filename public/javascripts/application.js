@@ -57,9 +57,8 @@ $(function () {
         $('#found').append('<li>' + data.msg + '</li>');
         break;
 
-      case 'stored':
-        $('p').text(data.msg);
-        break;
+      //case 'stored':
+      //  break;
       
       default:
         $('p').text(data.msg);
