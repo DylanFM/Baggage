@@ -13,7 +13,8 @@ function place (conn, name, lat, lng) {
 $(function () {
   // Connect to websocket server
   // Global for testing
-  conn = new WebSocket('ws://10.109.3.75:8080');
+  // Using an IP because I want to test with my phone
+  conn = new WebSocket('ws://192.168.178.87:8080');
 
   function updatePosition () {
     // Find location
@@ -54,7 +55,6 @@ $(function () {
     switch(data.type) {
       case 'found':
         $('#found').append('<li>' + data.msg + '</li>');
-        _.delay(updatePosition, 15000);
         break;
 
       case 'stored':

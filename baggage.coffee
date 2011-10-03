@@ -1,5 +1,6 @@
 ws = require 'websocket-server'
 redis = require 'redis'
+geohash = require 'ngeohash'
 
 # Redis stuff
 client = redis.createClient()
@@ -18,25 +19,23 @@ server.addListener 'connection', (conn) ->
       msg: msg
     console.log msg
     conn.send JSON.stringify(data)
+  
+  geohashKey = (lat, lng) ->
+    lat = parseFloat(lat, 10)
+    lng = parseFloat(lng, 10)
+    geohash.encode lat, lng
 
   conn.addListener 'message', (msg) ->
 
     msg = JSON.parse msg
+    key = geohashKey msg.coords.lat, msg.coords.lng
     switch msg.type
       when 'place'
-        lat = parseFloat(msg.coords.lat, 10).toFixed(5)
-        lng = parseFloat(msg.coords.lng, 10).toFixed(5)
+        client.set key, msg.name
 
-        client.set "obj#{lat},#{lng}", msg.name
-
-        msg = "Stored #{msg.name} at #{lat},#{lng}"
+        msg = "Stored #{msg.name} at #{msg.coords.lat},#{msg.coords.lng} (#{key})"
         notify msg, 'stored'
       when 'check'
-        lat = parseFloat(msg.coords.lat, 10).toFixed(5)
-        lng = parseFloat(msg.coords.lng, 10).toFixed(5)
-
-        key = "obj#{lat},#{lng}"
-
         client.get key, (err, reply) ->
           if err or !reply
             notify 'Checked in, nothing there'
