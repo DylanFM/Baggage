@@ -63,8 +63,8 @@ $(function () {
       
       default:
         $('p').text(data.msg);
-        _.delay(updatePosition, 5000);
     }
+    _.delay(updatePosition, 5000);
   };
  
 });
